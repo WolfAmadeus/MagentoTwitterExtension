@@ -1,0 +1,131 @@
+<?php
+
+/* 
+ * Copyright (C) 2016 Wolfgang Lorenz <wolfgang.a.lorenz@arcor.de>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+$wolf_twitter_design_tweetList = new Wolf_Twitter_Design_TweetList();
+
+?>
+
+<div id="wolf_twitter_tweetListHead">
+  <?php echo  $wolf_twitter_design_tweetList->tweetListHead(); ?>
+</div>
+<ul id="wolf_twitter_tweetList">
+  <?php foreach ( $this->getTweetList() as $tweet ) {
+
+  // echo '<pre> ';
+  // print_r($tweet);
+  // echo ' </pre>';
+
+    echo $wolf_twitter_design_tweetList->tweet($tweet);
+
+  } ?>
+</ul>
+
+
+<?php
+
+class Wolf_Twitter_Design_TweetList extends Wolf_Twitter_Helper_Data {
+
+  /*
+   * Überschrift der Tweet Liste
+   */
+  public function tweetListHead() {
+    return $this->__('Last ').' '.$this->getMaxTweets().' '.$this->getHashTag().' Tweets';
+  }
+  
+  /*
+   * Einzelnen Tweet formatieren
+   */
+  public function tweet($tweet)
+  {
+    $tweetCode = '';
+
+    // Tweet-Datum formatieren
+    $timeStamp = Mage::getModel('core/date')->timestamp(strtotime($tweet->created_at));
+    $writtenAt = '';
+    if ( date('d.m.Y', $timeStamp) === date('d.m.Y', time()) ) {
+      $writtenAt .= $this->__('Today ').', '.date('H:i', $timeStamp);
+    } else {
+      $writtenAt .= date('d.m.Y, H:i', $timeStamp);
+    }
+
+    // Die Meta-Daten ausgeben
+    $tweetCode .= '<li id="tweet_'.$tweet->id_str.'" class="wolf_twitter_tweet">'
+                  .'<div class="wolf_twitter_tweet_header">'
+                  .'  <a class="wolf_twitter_tweet_name" title="'.$tweet->user->description.'" '
+                  .'     href="'.$tweet->user->url.'" target="_blank">'.$tweet->user->screen_name.'</a>, &nbsp; '
+                  .'  <span class="wolf_twitter_tweet_date">'.$writtenAt.'</span>'
+                  .'</div>'
+                  .'<div class="wolf_twitter_tweet_body"> ';
+
+    // Bilder ausgeben
+    if ( isset($tweet->entities->media) ) {
+      if ( is_array($tweet->entities->media) ) {
+        foreach ( $tweet->entities->media as $medium ) {
+          // echo '<pre>';
+          // print_r($medium);
+          // echo '</pre>';
+          if ( $medium->type === 'photo' ) {
+            $tweetCode .= $this->tweetImage($medium);
+          }
+        }
+      }
+    }
+
+    // Die Links im Text aktivieren
+    if ( is_array($tweet->entities->urls) ) {
+      foreach ( $tweet->entities->urls as $url ) {
+        $link = '<a href="'.$url->url.'" target="_blank">'.$url->url.'</a>';
+        $tweet->text = str_replace($url->url, $link, $tweet->text);
+      }
+    }
+
+    // Text ausgeben
+    $tweetCode .= '<span class="wolf_twitter_tweet_text">'.$tweet->text.'</span> ';
+
+    // Tags abschliessen
+    $tweetCode .= '</div></li> ';
+
+    return $tweetCode;
+
+  }
+
+  public function tweetImage($medium)
+  {
+    $origWidth = intval($medium->sizes->large->w);
+    $height = 0;
+    if ( $origWidth > 0 ) {
+      $width = min([200, $origWidth]);
+      $height = intval(($width / $origWidth) * intval($medium->sizes->large->h));
+    }
+
+    $img = '<img src="'.$medium->media_url.'" ';
+    if ( $height > 0 ) { $img .= 'width="'.$width.'" height="'.$height.'" '; }
+    $img .= '/> ';
+
+    if ( isset($medium->url) ) {
+      $imgCode = '<a href="'.$medium->url.'" target="_blank" title="'.$medium->url.'">'.$img.'</a>';
+    } else {
+      $imgCode = $img;
+    }
+
+    return $imgCode;
+  }
+
+}
+?>
