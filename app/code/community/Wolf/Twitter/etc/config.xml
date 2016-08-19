@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2016 Wolfgang Lorenz <wolfgang.a.lorenz@arcor.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<config>
+
+  <modules>
+    <Wolf_Twitter>
+      <version>1.0.0</version>
+    </Wolf_Twitter>
+  </modules>
+
+  <global>
+    <models>
+      <wolf_twitter>
+        <class>Wolf_Twitter_Model</class>
+      </wolf_twitter>
+    </models>
+    <helpers>
+      <wolf_twitter>
+        <class>Wolf_Twitter_Helper</class>
+      </wolf_twitter>
+    </helpers>
+    <blocks>
+      <wolf_twitter>
+        <class>Wolf_Twitter_Block</class>
+      </wolf_twitter>
+    </blocks>
+  </global>
+
+  <frontend>
+    <routers>
+      <wolf_twitter>
+        <use>standard</use>
+        <args>
+          <module>Wolf_Twitter</module>
+          <frontName>twitter</frontName>
+        </args>
+      </wolf_twitter>
+    </routers>
+    <layout>
+      <updates>
+        <wolf_twitter>
+          <file>wolf_twitter.xml</file>
+        </wolf_twitter>
+      </updates>
+    </layout>
+    <translate>
+      <modules>
+        <translations>
+          <files>
+            <default>Wolf_Twitter.csv</default>
+          </files>
+        </translations>
+      </modules>
+    </translate>
+  </frontend>
+
+  <adminhtml>
+    <layout>
+      <updates>
+        <wolf_twitter>
+          <file>wolf_twitter.xml</file>
+        </wolf_twitter>
+      </updates>
+    </layout>
+    <translate>
+      <modules>
+        <translations>
+          <files>
+            <default>Wolf_Twitter.csv</default>
+          </files>
+        </translations>
+      </modules>
+    </translate>
+  </adminhtml>
+
+  <default>
+    <wolf_twitter>
+      <view>
+        <enabled>1</enabled>
+        <max_tweets>50</max_tweets>
+        <hashtag>#magento</hashtag>
+      </view>
+    </wolf_twitter>
+  </default>
+
+</config>
