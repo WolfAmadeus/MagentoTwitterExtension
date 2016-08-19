@@ -1,0 +1,85 @@
+/*
+Copyright (C) 2016 Wolfgang Lorenz <wolfgang.a.lorenz@arcor.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+/* 
+    Created on : 31.07.2016, 16:21:25
+    Author     : Wolfgang Lorenz <wolfgang.a.lorenz@arcor.de>
+*/
+
+
+#wolf_twitter_tweetListHead {
+  position: relative;
+  padding-bottom: 10px;
+  font-size: 20px;
+  font-weight: normal;
+  text-align: center;
+}
+#wolf_twitter_tweetListClose {
+  float: right;
+  clear: both;
+  width: 30px;
+  height: 30px;
+  padding: 0px 0px 1px 1px;
+  border: solid 2px white;
+  border-radius: 18px;
+  background-color: grey;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+#wolf_twitter_tweetList {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.wolf_twitter_tweet {
+  list-style: none;
+  margin-right: 20px;
+}
+.wolf_twitter_tweet_header {
+  width: 300px;
+  margin: 20px 0px 0px 0px;
+  padding: 5px 0px 5px 20px;
+  border-radius: 10px 0px 0px 0px;
+  border-left: solid 5px lightgrey;
+  border-bottom: solid 1px lightgrey;
+}
+.wolf_twitter_tweet_name {
+
+}
+.wolf_twitter_tweet_date {
+
+}
+.wolf_twitter_tweet_body {
+  margin: 0px;
+  border-left: solid 5px lightgrey;
+  padding: 10px 20px 10px 20px;
+  border-radius: 0px 10px 10px 10px;
+//  background-color: #f9f9f9;
+  overflow-x: hidden;
+}
+.wolf_twitter_tweet_body > * {
+  float: left;
+}
+.wolf_twitter_tweet_body .wolf_twitter_tweet_text {
+  float: left;
+  max-width: 600px;
+  padding-left: 20px;
+}
